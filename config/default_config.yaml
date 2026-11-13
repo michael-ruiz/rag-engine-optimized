@@ -1,0 +1,30 @@
+model:
+  id: Qwen/Qwen3.5-0.8B
+  device: auto   # auto (cuda -> mps -> cpu) | cuda | mps | cpu; dtype follows the device
+
+inspect:
+  # Qwen3.5 is hybrid: layers 3,7,11,15,19,23 use self_attn; the rest use linear_attn.
+  targets:
+    - model.layers.15.mlp
+    - model.layers.15.self_attn.o_proj
+
+rag:
+  qdrant_path: ./data/qdrant_local      # embedded, persistent, no Docker; locked by one process at a time
+  qdrant_url: null                      # e.g. http://qdrant:6333 in production (env QDRANT_API_KEY)
+  collection: patch_rag
+  embedding_model: BAAI/bge-small-en-v1.5
+  reranker_model: cross-encoder/ms-marco-MiniLM-L-6-v2   # or BAAI/bge-reranker-base; null disables reranking
+  chunk_size: 800        # characters
+  chunk_overlap: 120
+  candidates: 30         # per retriever (dense and BM25) before fusion
+  rrf_k: 60
+  rerank_top_k: 20       # fused candidates sent to the cross-encoder
+  top_n: 4               # chunks placed in the prompt
+  ingest_root: .         # POST /v1/ingest may only read under this directory
+
+serving:
+  model_path: Qwen/Qwen3.5-0.8B   # base model (env PATCH_RAG_MODEL overrides)
+  patched_model_path: null        # weight-patched checkpoint for use_patched_model A/B (env PATCH_RAG_PATCHED_MODEL)
+  max_new_tokens: 256
+  backend: auto      # auto | vllm | transformers  (env PATCH_RAG_BACKEND overrides)
+  vllm_url: http://127.0.0.1:8000/v1   # vllm-metal / remote vLLM server, used when backend: vllm off CUDA

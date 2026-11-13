@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "patch-rag"
+version = "0.1.0"
+description = "Low-latency RAG engine with surgical weight-space interventions for small LLMs."
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.4",
+    "transformers>=4.57",
+    "accelerate>=1.0",
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+    "qdrant-client>=1.12",
+    "sentence-transformers>=3.0",
+    "fastembed>=0.4",
+    "pypdf>=4.0",
+    "rank-bm25>=0.2.2",
+    "ragas>=0.2",
+    "langchain-community<0.4",  # ragas 0.4.3 imports chat_models.vertexai, removed in 0.4
+    "pydantic>=2.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+# vLLM/AutoAWQ ship Linux CUDA wheels only; on macOS use vllm-metal (brew) or the transformers backend.
+cuda = ["vllm>=0.6; sys_platform == 'linux'", "autoawq>=0.2; sys_platform == 'linux'"]
+mac = [
+    "mlx>=0.20; sys_platform == 'darwin' and platform_machine == 'arm64'",
+    "mlx-lm>=0.20; sys_platform == 'darwin' and platform_machine == 'arm64'",
+]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools.packages.find]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

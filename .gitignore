@@ -1,0 +1,6 @@
+__pycache__/
+*.egg-info/
+.pytest_cache/
+*.pt
+patched*/
+data/qdrant_local/

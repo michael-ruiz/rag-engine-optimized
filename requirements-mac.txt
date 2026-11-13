@@ -1,0 +1,4 @@
+-r requirements-base.txt
+# MLX only ships Apple Silicon wheels; skipped on Intel Macs.
+mlx>=0.20; sys_platform == "darwin" and platform_machine == "arm64"
+mlx-lm>=0.20; sys_platform == "darwin" and platform_machine == "arm64"

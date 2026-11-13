@@ -1,0 +1,15 @@
+torch>=2.4
+transformers>=4.57
+accelerate>=1.0
+fastapi>=0.110
+uvicorn>=0.29
+qdrant-client>=1.12
+sentence-transformers>=3.0
+fastembed>=0.4  # not imported yet: upgrade path to Qdrant-native sparse vectors
+pypdf>=4.0
+rank-bm25>=0.2.2
+ragas>=0.2
+langchain-community<0.4  # ragas 0.4.3 needs chat_models.vertexai, removed in 0.4
+pydantic>=2.0
+pyyaml>=6.0
+pytest>=8.0

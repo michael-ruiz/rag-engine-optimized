@@ -1,0 +1,10 @@
+Helio Labs IT FAQ
+
+How do I reset my password?
+Go to the Keystone self-service portal and choose "Forgot password". Resets require the Authenticator app. Passwords expire every 180 days and must be at least 14 characters.
+
+What VPN do we use?
+The company VPN is WireGuard-based and is called Tunnel. Install the Tunnel client from the internal software catalog. The VPN is mandatory when accessing the build farm from outside the office.
+
+Who do I contact for laptop issues?
+Open a ticket in the HelpDesk queue named "Hardware". The on-call IT technician responds within 4 business hours. Replacement laptops are issued from Building A, room 114.
